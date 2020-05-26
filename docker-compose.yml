@@ -1,0 +1,13 @@
+version: "3"
+
+services:
+
+  camunda-db:
+    image: postgres
+    container_name: camunda-db
+    hostname: camunda-db
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: CAMUNDA
+      POSTGRES_PASSWORD: CAMUNDA
