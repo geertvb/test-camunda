@@ -20,10 +20,14 @@
         <maven.compiler.parameters>true</maven.compiler.parameters>
 
         <camunda.version>7.12.0</camunda.version>
+        <camunda.assert.version>6.0.0</camunda.assert.version>
+        <camunda.coverage.version>0.3.2</camunda.coverage.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
+
+            <!-- Camunda -->
             <dependency>
                 <groupId>org.camunda.bpm</groupId>
                 <artifactId>camunda-bom</artifactId>
@@ -34,12 +38,20 @@
             <dependency>
                 <groupId>org.camunda.bpm.assert</groupId>
                 <artifactId>camunda-bpm-assert</artifactId>
-                <version>6.0.0</version>
+                <version>${camunda.assert.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.camunda.bpm.extension</groupId>
+                <artifactId>camunda-bpm-process-test-coverage</artifactId>
+                <version>${camunda.coverage.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
     <dependencies>
+
+        <!-- Camunda -->
         <dependency>
             <groupId>org.camunda.bpm</groupId>
             <artifactId>camunda-engine</artifactId>
@@ -47,19 +59,13 @@
         <dependency>
             <groupId>org.camunda.bpm.assert</groupId>
             <artifactId>camunda-bpm-assert</artifactId>
-            <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.13</version>
-            <scope>test</scope>
+            <groupId>org.camunda.bpm.extension</groupId>
+            <artifactId>camunda-bpm-process-test-coverage</artifactId>
         </dependency>
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
-            <version>1.2.3</version>
-        </dependency>
+
+        <!-- Database -->
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
@@ -70,15 +76,40 @@
             <artifactId>postgresql</artifactId>
             <version>42.2.12</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.uuid</groupId>
+            <artifactId>java-uuid-generator</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.13</version>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>3.3.3</version>
+        </dependency>
         <dependency>
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
             <version>3.13.2</version>
         </dependency>
+
+        <!-- Logging -->
         <dependency>
-            <groupId>com.fasterxml.uuid</groupId>
-            <artifactId>java-uuid-generator</artifactId>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.30</version>
         </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.2.3</version>
+        </dependency>
+
     </dependencies>
 
     <build>
