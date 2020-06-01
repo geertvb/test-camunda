@@ -38,6 +38,7 @@
     <modules>
         <module>hello-world</module>
         <module>setTaskDefinitionKey</module>
+        <module>processStartedEvent</module>
     </modules>
 
     <dependencyManagement>
