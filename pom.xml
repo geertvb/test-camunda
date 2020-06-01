@@ -32,10 +32,12 @@
         <assertj.version>3.13.2</assertj.version>
         <slf4j.version>1.7.30</slf4j.version>
         <logback.version>1.2.3</logback.version>
+        <groovy.version>2.5.7</groovy.version>
     </properties>
 
     <modules>
         <module>hello-world</module>
+        <module>setTaskDefinitionKey</module>
     </modules>
 
     <dependencyManagement>
@@ -58,6 +60,14 @@
                 <groupId>org.camunda.bpm.extension</groupId>
                 <artifactId>camunda-bpm-process-test-coverage</artifactId>
                 <version>${camunda.coverage.version}</version>
+            </dependency>
+
+            <!-- Script engines -->
+            <dependency>
+                <groupId>org.codehaus.groovy</groupId>
+                <artifactId>groovy-all</artifactId>
+                <version>${groovy.version}</version>
+                <type>pom</type>
             </dependency>
 
             <!-- Database -->
