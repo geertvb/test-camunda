@@ -3,7 +3,9 @@ package test.camunda.utils;
 import org.camunda.bpm.engine.TaskService;
 import org.camunda.bpm.engine.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+@Component
 public class CamundaUtilsImpl implements CamundaUtils {
 
     @Autowired

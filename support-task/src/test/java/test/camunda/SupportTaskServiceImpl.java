@@ -5,12 +5,14 @@ import org.camunda.bpm.engine.RuntimeService;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.camunda.bpm.engine.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import test.camunda.utils.CamundaUtils;
 
 import java.util.HashMap;
 import java.util.Map;
 
 @Slf4j
+@Component
 public class SupportTaskServiceImpl implements SupportTaskService {
 
     @Autowired

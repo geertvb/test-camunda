@@ -1,46 +1,34 @@
 package test.camunda;
 
 import org.camunda.bpm.engine.RuntimeService;
-import org.camunda.bpm.engine.TaskService;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.camunda.bpm.engine.task.Task;
 import org.camunda.bpm.engine.test.Deployment;
 import org.camunda.bpm.engine.test.ProcessEngineRule;
-import org.camunda.bpm.extension.process_test_coverage.junit.rules.TestCoverageProcessEngineRuleBuilder;
-import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
-import test.camunda.utils.CamundaUtils;
-import test.camunda.utils.CamundaUtilsImpl;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import static java.util.Collections.emptyMap;
-import static org.camunda.bpm.engine.test.assertions.bpmn.BpmnAwareTests.*;
+import static org.camunda.bpm.engine.test.assertions.bpmn.BpmnAwareTests.runtimeService;
+import static org.camunda.bpm.engine.test.assertions.bpmn.BpmnAwareTests.task;
 
-// TODO - Use Spring-Based Testing.
-// See https://docs.camunda.org/manual/latest/user-guide/spring-framework-integration/testing/
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = {TestConfig.class})
 public class SupportTaskTest {
 
     @Rule
-    @ClassRule
-    public static ProcessEngineRule rule = TestCoverageProcessEngineRuleBuilder.create().build();
+    @Autowired
+    public ProcessEngineRule processEngineRule;
 
-    protected RuntimeService runtimeService = runtimeService();
-    protected TaskService taskService = taskService();
-    protected CamundaUtils camundaUtils = camundaUtils(taskService);
-    protected SupportTaskService supportTaskService = supportTaskService(runtimeService, camundaUtils);
+    @Autowired
+    protected RuntimeService runtimeService;
 
-    public CamundaUtils camundaUtils(TaskService taskService) {
-        CamundaUtilsImpl camundaUtils = new CamundaUtilsImpl();
-        camundaUtils.taskService = taskService;
-        return camundaUtils;
-    }
-
-    public SupportTaskService supportTaskService(RuntimeService runtimeService, CamundaUtils camundaUtils) {
-        SupportTaskServiceImpl supportTaskService = new SupportTaskServiceImpl();
-        supportTaskService.runtimeService = runtimeService;
-        supportTaskService.camundaUtils = camundaUtils;
-        return supportTaskService;
-    }
+    @Autowired
+    public SupportTaskService supportTaskService;
 
     @Test
     @Deployment(resources = {"mainProcess.bpmn", "supportProcess.bpmn"})
