@@ -21,25 +21,33 @@ public class SupportTaskServiceImpl implements SupportTaskService {
     @Autowired
     protected CamundaUtils camundaUtils;
 
+    protected Map<String, Object> prepareVariables(String mainTaskInstanceId, String supportTaskTypeKey, Map<String, Object> variables) {
+        Map<String, Object> newVariables = new HashMap<>();
+
+        // Start with provided variables
+        if (variables != null) {
+            newVariables.putAll(variables);
+        }
+
+        // Add special variables
+        newVariables.put("ST:mainTaskInstanceId", mainTaskInstanceId);
+        newVariables.put("ST:supportTaskTypeKey", supportTaskTypeKey);
+
+        return newVariables;
+    }
+
     @Override
     public String createSupportTask(String mainTaskInstanceId, String supportTaskTypeKey, Map<String, Object> variables) {
         log.info("Creating support task of type {} for user task {} with variables {}",
                 supportTaskTypeKey, mainTaskInstanceId, variables);
 
-        // Prepare the process variables
-        Map<String, Object> newVariables = new HashMap<>();
-        if (variables != null) {
-            newVariables.putAll(variables);
-        }
-        newVariables.put("ST:mainTaskInstanceId", mainTaskInstanceId);
-        newVariables.put("ST:supportTaskTypeKey", supportTaskTypeKey);
+        // Prepare process variables
+        Map<String, Object> processVariables = prepareVariables(mainTaskInstanceId, supportTaskTypeKey, variables);
 
         // TODO - Check preconditions
 
         // Create support task process
-        ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(
-                "supportProcess",
-                newVariables);
+        ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("supportProcess", processVariables);
 
         // Wait for the process to reach the support task
         Task task = camundaUtils.waitForTask(processInstance.getId(), "supportTask");
