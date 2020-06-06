@@ -41,6 +41,7 @@
         <module>setTaskDefinitionKey</module>
         <module>processStartedEvent</module>
         <module>support-task</module>
+        <module>extension-properties</module>
     </modules>
 
     <dependencyManagement>
