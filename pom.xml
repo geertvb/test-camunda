@@ -44,6 +44,7 @@
         <module>support-task</module>
         <module>extension-properties</module>
         <module>spring-events</module>
+        <module>event-externalcondition</module>
     </modules>
 
     <dependencyManagement>
