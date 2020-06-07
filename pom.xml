@@ -34,6 +34,7 @@
         <logback.version>1.2.3</logback.version>
         <groovy.version>2.5.7</groovy.version>
         <spring.version>5.2.6.RELEASE</spring.version>
+        <spring-boot.version>2.2.5.RELEASE</spring-boot.version>
     </properties>
 
     <modules>
@@ -42,6 +43,7 @@
         <module>processStartedEvent</module>
         <module>support-task</module>
         <module>extension-properties</module>
+        <module>spring-events</module>
     </modules>
 
     <dependencyManagement>
@@ -67,6 +69,13 @@
             </dependency>
 
             <!-- Springframework -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring-boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
             <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-framework-bom</artifactId>
