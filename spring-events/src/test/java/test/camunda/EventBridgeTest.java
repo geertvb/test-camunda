@@ -14,6 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static org.camunda.bpm.engine.test.assertions.bpmn.AbstractAssertions.init;
 import static org.camunda.bpm.engine.test.assertions.bpmn.BpmnAwareTests.runtimeService;
 import static org.camunda.bpm.engine.test.assertions.bpmn.BpmnAwareTests.task;
@@ -55,7 +58,10 @@ public class EventBridgeTest {
     @Test
     @Deployment(resources = {"testProcess.bpmn"})
     public void createSupportTask() {
-        ProcessInstance processInstance = runtimeService().startProcessInstanceByKey("testProcess");
+        Map<String, Object> variables = new HashMap<>();
+        variables.put("Hello", "World!");
+
+        ProcessInstance processInstance = runtimeService().startProcessInstanceByKey("testProcess", variables);
         Task mainTask = task(processInstance);
         taskService.complete(mainTask.getId());
     }

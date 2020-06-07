@@ -10,14 +10,14 @@ import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
 import static org.apache.commons.lang3.builder.ToStringBuilder.reflectionToString;
-import static org.apache.commons.lang3.builder.ToStringStyle.JSON_STYLE;
+import static org.apache.commons.lang3.builder.ToStringStyle.MULTI_LINE_STYLE;
 
 @Slf4j
 @Component
 public class MyListener {
 
     protected void log(String message, Object value) {
-        log.info("{}: {} - {}", message, value.getClass().getName(), reflectionToString(value, JSON_STYLE));
+        log.info("{}: {} - {}", message, value.getClass().getName(), reflectionToString(value, MULTI_LINE_STYLE));
     }
 
     @EventListener
