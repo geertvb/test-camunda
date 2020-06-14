@@ -45,6 +45,7 @@
         <module>extension-properties</module>
         <module>spring-events</module>
         <module>event-externalcondition</module>
+        <module>adhoc</module>
     </modules>
 
     <dependencyManagement>
