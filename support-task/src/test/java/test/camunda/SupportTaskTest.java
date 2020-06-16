@@ -12,8 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import java.util.Map;
-
 import static java.util.Collections.emptyMap;
 import static org.camunda.bpm.engine.test.assertions.bpmn.BpmnAwareTests.runtimeService;
 import static org.camunda.bpm.engine.test.assertions.bpmn.BpmnAwareTests.task;
@@ -40,7 +38,6 @@ public class SupportTaskTest {
 
         String supportTaskInstanceId = supportTaskService.createSupportTask(mainTask.getId(), "supportX", emptyMap());
 
-        supportTaskService.cancelSupportTask(mainTask.getId(), "supportX", emptyMap());
     }
 
 }

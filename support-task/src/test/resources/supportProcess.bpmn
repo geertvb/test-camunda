@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="_7FrToMrfEeOyYYI9xhG4Cw" targetNamespace="http://camunda.org/schema/1.0/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.1" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd">
+<bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="_7FrToMrfEeOyYYI9xhG4Cw" targetNamespace="http://camunda.org/schema/1.0/bpmn" exporter="Camunda Modeler" exporterVersion="4.0.0" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd">
   <bpmn2:process id="supportProcess" isExecutable="true">
     <bpmn2:startEvent id="StartEvent_1">
       <bpmn2:outgoing>SequenceFlow_1</bpmn2:outgoing>
@@ -20,7 +20,7 @@
       <bpmn2:messageEventDefinition id="MessageEventDefinition_069i0vi" messageRef="Message_0zbmusz" />
     </bpmn2:boundaryEvent>
   </bpmn2:process>
-  <bpmn2:message id="Message_0zbmusz" name="cancelSupportTask_${mainTaskInstanceId}_${supportTaskTypeKey}" />
+  <bpmn2:message id="Message_0zbmusz" name="cancelSupportTask" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="supportProcess">
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_2" bpmnElement="SequenceFlow_2" sourceElement="_BPMNShape_UserTask_2" targetElement="_BPMNShape_EndEvent_2">
