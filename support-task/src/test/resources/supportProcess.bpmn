@@ -20,7 +20,7 @@
       <bpmn2:messageEventDefinition id="MessageEventDefinition_069i0vi" messageRef="Message_0zbmusz" />
     </bpmn2:boundaryEvent>
   </bpmn2:process>
-  <bpmn2:message id="Message_0zbmusz" name="cancelSupportTask_${mainTaskInstanceId}_${supportTaskTypeKey}" />
+  <bpmn2:message id="Message_0zbmusz" name="cancelSupportTask" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="supportProcess">
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_2" bpmnElement="SequenceFlow_2" sourceElement="_BPMNShape_UserTask_2" targetElement="_BPMNShape_EndEvent_2">

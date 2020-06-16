@@ -30,8 +30,8 @@ public class SupportTaskServiceImpl implements SupportTaskService {
         }
 
         // Add special variables
-        newVariables.put("mainTaskInstanceId", mainTaskInstanceId);
-        newVariables.put("supportTaskTypeKey", supportTaskTypeKey);
+        newVariables.put("ST:mainTaskInstanceId", mainTaskInstanceId);
+        newVariables.put("ST:supportTaskTypeKey", supportTaskTypeKey);
 
         return newVariables;
     }
@@ -53,22 +53,19 @@ public class SupportTaskServiceImpl implements SupportTaskService {
         Task task = camundaUtils.waitForTask(processInstance.getId(), "supportTask");
 
         log.info("Support task created with id {}", task.getId());
-        return task.getId();
+        return processInstance.getId();
     }
 
     @Override
-    public void cancelSupportTask(String mainTaskInstanceId, String supportTaskTypeKey, Map<String, Object> variables) {
-
-        String messageName="cancelSupportTask_"+mainTaskInstanceId+"_"+supportTaskTypeKey;
-
-        // correlate the message by its unique name
+    public void cancelSupportTask(String messageName, String supportProcessInstanceId) {
         try {
-            runtimeService.correlateMessage(messageName);
+            runtimeService.createMessageCorrelation(messageName)
+                    .processInstanceId(supportProcessInstanceId)
+                    .correlateWithResult();
             log.info("Support task cancelled with message name '{}'", messageName);
         } catch (MismatchingMessageCorrelationException e) {
             e.printStackTrace();
             log.info("Support task cancellation exception {}", e.getMessage());
-
         }
     }
 

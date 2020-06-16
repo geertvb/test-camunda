@@ -32,12 +32,11 @@ public class SupportTaskTest {
 
     @Test
     @Deployment(resources = {"mainProcess.bpmn", "supportProcess.bpmn"})
-    public void createSupportTask() {
+    public void manageSupportTask() {
         ProcessInstance processInstance = runtimeService().startProcessInstanceByKey("mainProcess");
         Task mainTask = task(processInstance);
-
-        String supportTaskInstanceId = supportTaskService.createSupportTask(mainTask.getId(), "supportX", emptyMap());
-        supportTaskService.cancelSupportTask(mainTask.getId(), "supportX", emptyMap());
+        String supportProcessInstanceId = supportTaskService.createSupportTask(mainTask.getId(), "supportX", emptyMap());
+        supportTaskService.cancelSupportTask("cancelSupportTask", supportProcessInstanceId);
     }
 
 }
