@@ -37,7 +37,7 @@ public class SupportTaskTest {
         Task mainTask = task(processInstance);
 
         String supportTaskInstanceId = supportTaskService.createSupportTask(mainTask.getId(), "supportX", emptyMap());
-
+        supportTaskService.cancelSupportTask(mainTask.getId(), "supportX", emptyMap());
     }
 
 }
