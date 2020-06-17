@@ -7,7 +7,7 @@ import org.camunda.bpm.engine.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import test.camunda.utils.CamundaUtils;
-
+import org.camunda.bpm.engine.MismatchingMessageCorrelationException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -53,7 +53,20 @@ public class SupportTaskServiceImpl implements SupportTaskService {
         Task task = camundaUtils.waitForTask(processInstance.getId(), "supportTask");
 
         log.info("Support task created with id {}", task.getId());
-        return task.getId();
+        return processInstance.getId();
+    }
+
+    @Override
+    public void cancelSupportTask(String messageName, String supportProcessInstanceId) {
+        try {
+            runtimeService.createMessageCorrelation(messageName)
+                    .processInstanceId(supportProcessInstanceId)
+                    .correlateWithResult();
+            log.info("Support task cancelled with message name '{}'", messageName);
+        } catch (MismatchingMessageCorrelationException e) {
+            e.printStackTrace();
+            log.info("Support task cancellation exception {}", e.getMessage());
+        }
     }
 
 }
