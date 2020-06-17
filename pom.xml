@@ -46,6 +46,7 @@
         <module>spring-events</module>
         <module>event-externalcondition</module>
         <module>adhoc</module>
+        <module>cancelTaskById</module>
     </modules>
 
     <dependencyManagement>
