@@ -13,8 +13,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import static java.util.Collections.emptyMap;
-import static org.camunda.bpm.engine.test.assertions.bpmn.BpmnAwareTests.runtimeService;
-import static org.camunda.bpm.engine.test.assertions.bpmn.BpmnAwareTests.task;
+import static org.camunda.bpm.engine.test.assertions.bpmn.BpmnAwareTests.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {TestConfig.class})
@@ -38,6 +37,16 @@ public class SupportTaskTest {
 
         String supportTaskInstanceId = supportTaskService.createSupportTask(mainTask.getId(), "supportX", emptyMap());
 
+    }
+
+    @Test
+    @Deployment(resources = {"mainProcess.bpmn", "supportProcess.bpmn"})
+    public void cancelSupportTask() {
+        ProcessInstance processInstance = runtimeService().startProcessInstanceByKey("mainProcess");
+        Task mainTask = task(processInstance);
+        String supportTaskInstanceId = supportTaskService.createSupportTask(mainTask.getId(), "supportX", emptyMap());
+
+        supportTaskService.cancelSupportTask(supportTaskInstanceId);
     }
 
 }
