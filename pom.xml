@@ -47,6 +47,7 @@
         <module>event-externalcondition</module>
         <module>adhoc</module>
         <module>cancelTaskById</module>
+        <module>correlateLocalVariables</module>
     </modules>
 
     <dependencyManagement>
