@@ -48,6 +48,7 @@
         <module>adhoc</module>
         <module>cancelTaskById</module>
         <module>correlateLocalVariables</module>
+        <module>resurrectProcess</module>
     </modules>
 
     <dependencyManagement>
