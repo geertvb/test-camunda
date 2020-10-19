@@ -56,4 +56,12 @@ public class SupportTaskServiceImpl implements SupportTaskService {
         return task.getId();
     }
 
+    @Override
+    public void cancelSupportTask(String supportTaskInstanceId) {
+        log.info("Cancelling support task {}", supportTaskInstanceId);
+
+        Task task = camundaUtils.getTask(supportTaskInstanceId);
+        runtimeService.messageEventReceived("cancelSupportTask", task.getExecutionId());
+    }
+
 }

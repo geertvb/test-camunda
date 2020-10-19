@@ -6,4 +6,6 @@ public interface CamundaUtils {
 
     Task waitForTask(String processInstanceId, String taskTypeKey);
 
+    Task getTask(String taskInstanceId);
+
 }

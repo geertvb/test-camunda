@@ -18,4 +18,11 @@ public class CamundaUtilsImpl implements CamundaUtils {
                 .singleResult();
     }
 
+    @Override
+    public Task getTask(String taskInstanceId) {
+        return taskService.createTaskQuery()
+                .taskId(taskInstanceId)
+                .singleResult();
+    }
+
 }
