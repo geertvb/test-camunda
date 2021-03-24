@@ -43,6 +43,7 @@
         <module>processStartedEvent</module>
         <module>support-task</module>
         <module>boundary-extension-properties</module>
+        <module>boundary-timer-listener</module>
         <module>extension-properties</module>
         <module>spring-events</module>
         <module>event-externalcondition</module>
