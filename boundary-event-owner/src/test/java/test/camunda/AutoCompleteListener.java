@@ -1,10 +1,7 @@
 package test.camunda;
 
 import lombok.extern.slf4j.Slf4j;
-import org.camunda.bpm.engine.HistoryService;
-import org.camunda.bpm.engine.ManagementService;
 import org.camunda.bpm.engine.RuntimeService;
-import org.camunda.bpm.engine.TaskService;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.ExecutionListener;
 import org.camunda.bpm.engine.impl.persistence.entity.ExecutionEntity;
@@ -21,16 +18,7 @@ import static test.camunda.utils.LoggingUtils.asMultiLine;
 public class AutoCompleteListener implements ExecutionListener {
 
     @Autowired
-    protected ManagementService managementService;
-
-    @Autowired
     protected RuntimeService runtimeService;
-
-    @Autowired
-    protected TaskService taskService;
-
-    @Autowired
-    protected HistoryService historyService;
 
     public void notify(DelegateExecution execution) {
         log.info("AutoCompleteListener execution: {}", asMultiLine(execution));

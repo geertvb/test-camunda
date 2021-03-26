@@ -18,7 +18,6 @@
         <camunda:properties>
           <camunda:property name="MIMIC_OUTCOME" value="ACCEPT_X" />
         </camunda:properties>
-        <camunda:executionListener delegateExpression="${createSupportTaskListener}" event="start" />
       </bpmn2:extensionElements>
       <bpmn2:outgoing>Flow_0o33zv4</bpmn2:outgoing>
       <bpmn2:messageEventDefinition id="MessageEventDefinition_0imctsl" messageRef="Message_0vbqhz2" />
