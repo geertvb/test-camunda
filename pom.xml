@@ -42,6 +42,7 @@
         <module>setTaskDefinitionKey</module>
         <module>processStartedEvent</module>
         <module>support-task</module>
+        <module>boundary-event-owner</module>
         <module>boundary-extension-properties</module>
         <module>boundary-timer-listener</module>
         <module>extension-properties</module>
