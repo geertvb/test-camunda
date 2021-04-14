@@ -1,9 +1,9 @@
 package test.camunda;
 
 import lombok.extern.slf4j.Slf4j;
-import org.camunda.bpm.engine.ProcessEngine;
-import org.camunda.bpm.engine.RuntimeService;
-import org.camunda.bpm.engine.TaskService;
+import org.camunda.bpm.engine.*;
+import org.camunda.bpm.engine.externaltask.ExternalTask;
+import org.camunda.bpm.engine.history.HistoricVariableInstance;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.camunda.bpm.engine.test.Deployment;
 import org.junit.Before;
@@ -14,6 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static org.camunda.bpm.engine.test.assertions.bpmn.AbstractAssertions.init;
@@ -46,6 +47,12 @@ public class EventBridgeTest {
     protected RuntimeService runtimeService;
 
     @Autowired
+    protected ExternalTaskService externalTaskService;
+
+    @Autowired
+    protected HistoryService historyService;
+
+    @Autowired
     protected TaskService taskService;
 
     @Before
@@ -59,7 +66,15 @@ public class EventBridgeTest {
         Map<String, Object> variables = new HashMap<>();
 
         ProcessInstance processInstance = runtimeService().startProcessInstanceByKey("testProcess", variables);
-//        Thread.sleep(1000L);
+
+        ExternalTask externalTask = externalTaskService.createExternalTaskQuery().singleResult();
+
+        List<HistoricVariableInstance> localVariables = historyService.createHistoricVariableInstanceQuery()
+                .activityInstanceIdIn(externalTask.getActivityInstanceId())
+                .list();
+
+        log.info("Local variables: {}, {}", externalTask.getActivityInstanceId(), localVariables);
+
     }
 
 }
