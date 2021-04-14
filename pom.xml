@@ -52,6 +52,7 @@
         <module>cancelTaskById</module>
         <module>correlateLocalVariables</module>
         <module>resurrectProcess</module>
+        <module>externaltask-created</module>
     </modules>
 
     <dependencyManagement>
