@@ -33,9 +33,9 @@
           </list>
         </property> -->
 
-        <property name="processEnginePlugins">
+        <property name="customPreVariableSerializers">
             <list>
-                <bean class="org.camunda.spin.plugin.impl.SpinProcessEnginePlugin" />
+                <bean class="test.camunda.longstring.LongStringSerializer" />
             </list>
         </property>
 

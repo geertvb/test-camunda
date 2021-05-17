@@ -1,5 +1,6 @@
 package test.camunda;
 
+import lombok.extern.slf4j.Slf4j;
 import org.camunda.bpm.engine.RuntimeService;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.camunda.bpm.engine.test.Deployment;
@@ -13,6 +14,7 @@ import java.util.Map;
 
 import static org.camunda.bpm.engine.test.assertions.bpmn.BpmnAwareTests.*;
 
+@Slf4j
 public class CamundaTest {
 
     @Rule
@@ -32,39 +34,17 @@ public class CamundaTest {
         }
         String longString = longStringBuffer.toString();
 
-        // This fails
-        // runtimeService.setVariable(processInstance.getId(), "longstring", longString);
-
-        // This doesn't fail
-        runtimeService.setVariable(processInstance.getId(), "longstring", new LongString(longString));
+        runtimeService.setVariable(processInstance.getId(), "shortstring", "shortvalue");
+        // This fails without long string serializer
+        runtimeService.setVariable(processInstance.getId(), "longstring", longString);
 
         Map<String, Object> variables = runtimeService.getVariables(processInstance.getId());
 
+        String value = "" + variables.get("longstring");
+        log.info("longstring: {}", value.substring(0, 20) + "...");
+        log.info("shortstring: {}", variables.get("shortstring"));
+
         complete(task(processInstance));
-    }
-
-    public static class LongString {
-        private String value;
-
-        public void setValue(String value) {
-            this.value = value;
-        }
-
-        public String getValue() {
-            return value;
-        }
-
-        public LongString() {
-        }
-
-        public LongString(String value) {
-            this.value = value;
-        }
-
-        @Override
-        public String toString() {
-            return value;
-        }
     }
 
 }
