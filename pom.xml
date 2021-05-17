@@ -53,6 +53,7 @@
         <module>correlateLocalVariables</module>
         <module>resurrectProcess</module>
         <module>externaltask-created</module>
+        <module>long-strings</module>
     </modules>
 
     <dependencyManagement>
