@@ -54,6 +54,7 @@
         <module>resurrectProcess</module>
         <module>externaltask-created</module>
         <module>long-strings</module>
+        <module>deliverMessage</module>
     </modules>
 
     <dependencyManagement>
