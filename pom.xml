@@ -55,6 +55,7 @@
         <module>externaltask-created</module>
         <module>long-strings</module>
         <module>deliverMessage</module>
+        <module>externally-terminated</module>
     </modules>
 
     <dependencyManagement>
