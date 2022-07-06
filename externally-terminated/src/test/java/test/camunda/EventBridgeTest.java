@@ -1,5 +1,6 @@
 package test.camunda;
 
+import com.github.javaparser.utils.Log;
 import lombok.extern.slf4j.Slf4j;
 import org.camunda.bpm.engine.ProcessEngine;
 import org.camunda.bpm.engine.RuntimeService;
@@ -71,7 +72,7 @@ public class EventBridgeTest {
         builderConsumer.accept(builder);
 
         // Execute the modifications
-        builder.executeAsync();
+        builder.execute();
 
         Thread.sleep(1000L);
 
@@ -105,6 +106,32 @@ public class EventBridgeTest {
 
             // Cancel current activity = MainTask
             builder.cancelAllForActivity("MainTask");
+        });
+    }
+
+    @Test
+    @Deployment(resources = {"testProcess.bpmn"})
+    public void externallyTerminated() throws Exception {
+        modify(builder -> {
+            String ancestorActivityInstanceId = historyService().createHistoricActivityInstanceQuery()
+                    .activityId("EmbeddedProcess")
+                    .singleResult()
+                    .getId();
+
+            log.info("Ancestor activity: {}", ancestorActivityInstanceId);
+
+            // Start after MainTask
+            builder.startAfterActivity("MainTask", ancestorActivityInstanceId);
+
+            String activityInstanceId = historyService().createHistoricActivityInstanceQuery()
+                    .activityId("MainTask")
+                    .singleResult()
+                    .getId();
+
+            log.info("Activity: {}", activityInstanceId);
+
+            // Cancel current activity = MainTask
+            builder.cancelActivityInstance(activityInstanceId);
         });
     }
 
