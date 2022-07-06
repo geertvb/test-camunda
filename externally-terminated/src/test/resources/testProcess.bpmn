@@ -4,13 +4,8 @@
     <bpmn2:startEvent id="StartEvent">
       <bpmn2:outgoing>Flow_1fjtl6b</bpmn2:outgoing>
     </bpmn2:startEvent>
-    <bpmn2:scriptTask id="HelloScript" name="Hello" camunda:asyncBefore="true" camunda:asyncAfter="true" scriptFormat="groovy">
-      <bpmn2:incoming>Flow_1fjtl6b</bpmn2:incoming>
-      <bpmn2:outgoing>Flow_10520en</bpmn2:outgoing>
-      <bpmn2:script>println "Hello"</bpmn2:script>
-    </bpmn2:scriptTask>
     <bpmn2:subProcess id="EmbeddedProcess">
-      <bpmn2:incoming>Flow_10520en</bpmn2:incoming>
+      <bpmn2:incoming>Flow_1fjtl6b</bpmn2:incoming>
       <bpmn2:outgoing>Flow_0fhizz1</bpmn2:outgoing>
       <bpmn2:startEvent id="StartEmbeddedEvent">
         <bpmn2:outgoing>Flow_1k7xgqt</bpmn2:outgoing>
@@ -25,70 +20,61 @@
       </bpmn2:endEvent>
       <bpmn2:sequenceFlow id="Flow_18m6llh" sourceRef="MainTask" targetRef="EndEmbeddedEvent" />
     </bpmn2:subProcess>
-    <bpmn2:sequenceFlow id="Flow_1fjtl6b" sourceRef="StartEvent" targetRef="HelloScript" />
-    <bpmn2:sequenceFlow id="Flow_10520en" sourceRef="HelloScript" targetRef="EmbeddedProcess" />
-    <bpmn2:sequenceFlow id="Flow_0fhizz1" sourceRef="EmbeddedProcess" targetRef="WorldScript" />
+    <bpmn2:sequenceFlow id="Flow_1fjtl6b" sourceRef="StartEvent" targetRef="EmbeddedProcess" />
+    <bpmn2:sequenceFlow id="Flow_0fhizz1" sourceRef="EmbeddedProcess" targetRef="SayHelloScript" />
     <bpmn2:endEvent id="EndEvent">
       <bpmn2:incoming>Flow_1re3tjv</bpmn2:incoming>
     </bpmn2:endEvent>
-    <bpmn2:sequenceFlow id="Flow_1re3tjv" sourceRef="WorldScript" targetRef="EndEvent" />
-    <bpmn2:scriptTask id="WorldScript" name="Wold" camunda:asyncBefore="true" camunda:asyncAfter="true" scriptFormat="groovy">
+    <bpmn2:sequenceFlow id="Flow_1re3tjv" sourceRef="SayHelloScript" targetRef="EndEvent" />
+    <bpmn2:scriptTask id="SayHelloScript" name="Say Hello" camunda:asyncBefore="true" camunda:asyncAfter="true" scriptFormat="groovy">
       <bpmn2:incoming>Flow_0fhizz1</bpmn2:incoming>
       <bpmn2:outgoing>Flow_1re3tjv</bpmn2:outgoing>
-      <bpmn2:script>println "World"</bpmn2:script>
+      <bpmn2:script>println "Hello World!"</bpmn2:script>
     </bpmn2:scriptTask>
   </bpmn2:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="ExternallyTerminatedProcess">
       <bpmndi:BPMNEdge id="Flow_1fjtl6b_di" bpmnElement="Flow_1fjtl6b">
-        <di:waypoint x="193" y="182" />
-        <di:waypoint x="250" y="182" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_10520en_di" bpmnElement="Flow_10520en">
-        <di:waypoint x="350" y="182" />
-        <di:waypoint x="430" y="182" />
+        <di:waypoint x="188" y="180" />
+        <di:waypoint x="240" y="180" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0fhizz1_di" bpmnElement="Flow_0fhizz1">
-        <di:waypoint x="780" y="182" />
-        <di:waypoint x="860" y="182" />
+        <di:waypoint x="590" y="180" />
+        <di:waypoint x="670" y="180" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1re3tjv_di" bpmnElement="Flow_1re3tjv">
-        <di:waypoint x="960" y="182" />
-        <di:waypoint x="1042" y="182" />
+        <di:waypoint x="770" y="180" />
+        <di:waypoint x="852" y="180" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_3" bpmnElement="StartEvent">
-        <dc:Bounds x="157" y="164" width="36" height="36" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0iycg9w_di" bpmnElement="HelloScript">
-        <dc:Bounds x="250" y="142" width="100" height="80" />
-        <bpmndi:BPMNLabel />
+        <dc:Bounds x="152" y="162" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1h3tnt2_di" bpmnElement="EndEvent">
-        <dc:Bounds x="1042" y="164" width="36" height="36" />
+        <dc:Bounds x="852" y="162" width="36" height="36" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1coz2rr_di" bpmnElement="WorldScript">
-        <dc:Bounds x="860" y="142" width="100" height="80" />
+      <bpmndi:BPMNShape id="Activity_1coz2rr_di" bpmnElement="SayHelloScript">
+        <dc:Bounds x="670" y="140" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1j5yx8p_di" bpmnElement="EmbeddedProcess" isExpanded="true">
-        <dc:Bounds x="430" y="82" width="350" height="200" />
+        <dc:Bounds x="240" y="80" width="350" height="200" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="Flow_1k7xgqt_di" bpmnElement="Flow_1k7xgqt">
-        <di:waypoint x="506" y="182" />
-        <di:waypoint x="560" y="182" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_18m6llh_di" bpmnElement="Flow_18m6llh">
-        <di:waypoint x="660" y="182" />
-        <di:waypoint x="722" y="182" />
+        <di:waypoint x="470" y="180" />
+        <di:waypoint x="532" y="180" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1k7xgqt_di" bpmnElement="Flow_1k7xgqt">
+        <di:waypoint x="316" y="180" />
+        <di:waypoint x="370" y="180" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="Event_1eakn4o_di" bpmnElement="StartEmbeddedEvent">
-        <dc:Bounds x="470" y="164" width="36" height="36" />
+        <dc:Bounds x="280" y="162" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="_BPMNShape_UserTask_2" bpmnElement="MainTask">
-        <dc:Bounds x="560" y="142" width="100" height="80" />
+        <dc:Bounds x="370" y="140" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1r2opc3_di" bpmnElement="EndEmbeddedEvent">
-        <dc:Bounds x="722" y="164" width="36" height="36" />
+        <dc:Bounds x="532" y="162" width="36" height="36" />
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

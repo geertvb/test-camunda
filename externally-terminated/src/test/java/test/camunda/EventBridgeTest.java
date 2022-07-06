@@ -1,10 +1,9 @@
 package test.camunda;
 
-import com.github.javaparser.utils.Log;
 import lombok.extern.slf4j.Slf4j;
+import org.camunda.bpm.engine.HistoryService;
 import org.camunda.bpm.engine.ProcessEngine;
 import org.camunda.bpm.engine.RuntimeService;
-import org.camunda.bpm.engine.TaskService;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.camunda.bpm.engine.runtime.ProcessInstanceModificationBuilder;
 import org.camunda.bpm.engine.test.Deployment;
@@ -13,6 +12,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.HashMap;
@@ -21,7 +21,6 @@ import java.util.function.Consumer;
 
 import static org.camunda.bpm.engine.test.assertions.bpmn.AbstractAssertions.init;
 import static org.camunda.bpm.engine.test.assertions.bpmn.BpmnAwareTests.historyService;
-import static org.camunda.bpm.engine.test.assertions.bpmn.BpmnAwareTests.runtimeService;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @Slf4j
@@ -47,7 +46,7 @@ public class EventBridgeTest {
     protected RuntimeService runtimeService;
 
     @Autowired
-    protected TaskService taskService;
+    protected HistoryService historyService;
 
     @Before
     public void setUp() {
@@ -59,7 +58,7 @@ public class EventBridgeTest {
         Map<String, Object> variables = new HashMap<>();
         variables.put("Hello", "World!");
 
-        ProcessInstance processInstance = runtimeService().startProcessInstanceByKey("ExternallyTerminatedProcess", variables);
+        ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("ExternallyTerminatedProcess", variables);
         String processInstanceId = processInstance.getId();
 
         Thread.sleep(1000L);
@@ -86,6 +85,7 @@ public class EventBridgeTest {
     }
 
     @Test
+    @DirtiesContext
     @Deployment(resources = {"testProcess.bpmn"})
     public void completed() throws Exception {
         modify(builder -> {
@@ -98,6 +98,7 @@ public class EventBridgeTest {
     }
 
     @Test
+    @DirtiesContext
     @Deployment(resources = {"testProcess.bpmn"})
     public void interrupted() throws Exception {
         modify(builder -> {
@@ -110,10 +111,11 @@ public class EventBridgeTest {
     }
 
     @Test
+    @DirtiesContext
     @Deployment(resources = {"testProcess.bpmn"})
     public void externallyTerminated() throws Exception {
         modify(builder -> {
-            String ancestorActivityInstanceId = historyService().createHistoricActivityInstanceQuery()
+            String ancestorActivityInstanceId = historyService.createHistoricActivityInstanceQuery()
                     .activityId("EmbeddedProcess")
                     .singleResult()
                     .getId();
@@ -123,7 +125,7 @@ public class EventBridgeTest {
             // Start after MainTask
             builder.startAfterActivity("MainTask", ancestorActivityInstanceId);
 
-            String activityInstanceId = historyService().createHistoricActivityInstanceQuery()
+            String activityInstanceId = historyService.createHistoricActivityInstanceQuery()
                     .activityId("MainTask")
                     .singleResult()
                     .getId();
