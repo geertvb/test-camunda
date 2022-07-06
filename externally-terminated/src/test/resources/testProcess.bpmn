@@ -1,51 +1,94 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="_7FrToMrfEeOyYYI9xhG4Cw" targetNamespace="http://camunda.org/schema/1.0/bpmn" exporter="Camunda Modeler" exporterVersion="5.0.0" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd">
-  <bpmn2:process id="testProcess" isExecutable="true">
-    <bpmn2:startEvent id="StartEvent_1">
-      <bpmn2:outgoing>SequenceFlow_1</bpmn2:outgoing>
+  <bpmn2:process id="ExternallyTerminatedProcess" isExecutable="true" camunda:versionTag="1.0.0">
+    <bpmn2:startEvent id="StartEvent">
+      <bpmn2:outgoing>Flow_1fjtl6b</bpmn2:outgoing>
     </bpmn2:startEvent>
-    <bpmn2:userTask id="mainTask" name="Main Task">
-      <bpmn2:incoming>SequenceFlow_1</bpmn2:incoming>
-      <bpmn2:outgoing>SequenceFlow_2</bpmn2:outgoing>
-    </bpmn2:userTask>
-    <bpmn2:sequenceFlow id="SequenceFlow_1" name="" sourceRef="StartEvent_1" targetRef="mainTask" />
-    <bpmn2:endEvent id="EndEvent_1">
-      <bpmn2:incoming>Flow_0pazyy7</bpmn2:incoming>
-    </bpmn2:endEvent>
-    <bpmn2:sequenceFlow id="SequenceFlow_2" name="" sourceRef="mainTask" targetRef="HelloScript" />
-    <bpmn2:sequenceFlow id="Flow_0pazyy7" sourceRef="HelloScript" targetRef="EndEvent_1" />
     <bpmn2:scriptTask id="HelloScript" name="Hello" camunda:asyncBefore="true" camunda:asyncAfter="true" scriptFormat="groovy">
-      <bpmn2:incoming>SequenceFlow_2</bpmn2:incoming>
-      <bpmn2:outgoing>Flow_0pazyy7</bpmn2:outgoing>
+      <bpmn2:incoming>Flow_1fjtl6b</bpmn2:incoming>
+      <bpmn2:outgoing>Flow_10520en</bpmn2:outgoing>
       <bpmn2:script>println "Hello"</bpmn2:script>
+    </bpmn2:scriptTask>
+    <bpmn2:subProcess id="EmbeddedProcess">
+      <bpmn2:incoming>Flow_10520en</bpmn2:incoming>
+      <bpmn2:outgoing>Flow_0fhizz1</bpmn2:outgoing>
+      <bpmn2:startEvent id="StartEmbeddedEvent">
+        <bpmn2:outgoing>Flow_1k7xgqt</bpmn2:outgoing>
+      </bpmn2:startEvent>
+      <bpmn2:userTask id="MainTask" name="Main Task">
+        <bpmn2:incoming>Flow_1k7xgqt</bpmn2:incoming>
+        <bpmn2:outgoing>Flow_18m6llh</bpmn2:outgoing>
+      </bpmn2:userTask>
+      <bpmn2:sequenceFlow id="Flow_1k7xgqt" sourceRef="StartEmbeddedEvent" targetRef="MainTask" />
+      <bpmn2:endEvent id="EndEmbeddedEvent">
+        <bpmn2:incoming>Flow_18m6llh</bpmn2:incoming>
+      </bpmn2:endEvent>
+      <bpmn2:sequenceFlow id="Flow_18m6llh" sourceRef="MainTask" targetRef="EndEmbeddedEvent" />
+    </bpmn2:subProcess>
+    <bpmn2:sequenceFlow id="Flow_1fjtl6b" sourceRef="StartEvent" targetRef="HelloScript" />
+    <bpmn2:sequenceFlow id="Flow_10520en" sourceRef="HelloScript" targetRef="EmbeddedProcess" />
+    <bpmn2:sequenceFlow id="Flow_0fhizz1" sourceRef="EmbeddedProcess" targetRef="WorldScript" />
+    <bpmn2:endEvent id="EndEvent">
+      <bpmn2:incoming>Flow_1re3tjv</bpmn2:incoming>
+    </bpmn2:endEvent>
+    <bpmn2:sequenceFlow id="Flow_1re3tjv" sourceRef="WorldScript" targetRef="EndEvent" />
+    <bpmn2:scriptTask id="WorldScript" name="Wold" camunda:asyncBefore="true" camunda:asyncAfter="true" scriptFormat="groovy">
+      <bpmn2:incoming>Flow_0fhizz1</bpmn2:incoming>
+      <bpmn2:outgoing>Flow_1re3tjv</bpmn2:outgoing>
+      <bpmn2:script>println "World"</bpmn2:script>
     </bpmn2:scriptTask>
   </bpmn2:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
-    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="testProcess">
-      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_2" bpmnElement="SequenceFlow_2" sourceElement="_BPMNShape_UserTask_2" targetElement="Activity_0iycg9w_di">
-        <di:waypoint x="343" y="122" />
-        <di:waypoint x="400" y="122" />
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="ExternallyTerminatedProcess">
+      <bpmndi:BPMNEdge id="Flow_1fjtl6b_di" bpmnElement="Flow_1fjtl6b">
+        <di:waypoint x="193" y="182" />
+        <di:waypoint x="250" y="182" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_1" bpmnElement="SequenceFlow_1" sourceElement="_BPMNShape_StartEvent_3" targetElement="_BPMNShape_UserTask_2">
-        <di:waypoint x="193" y="122" />
-        <di:waypoint x="243" y="122" />
+      <bpmndi:BPMNEdge id="Flow_10520en_di" bpmnElement="Flow_10520en">
+        <di:waypoint x="350" y="182" />
+        <di:waypoint x="430" y="182" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0pazyy7_di" bpmnElement="Flow_0pazyy7">
-        <di:waypoint x="500" y="122" />
-        <di:waypoint x="642" y="122" />
+      <bpmndi:BPMNEdge id="Flow_0fhizz1_di" bpmnElement="Flow_0fhizz1">
+        <di:waypoint x="780" y="182" />
+        <di:waypoint x="860" y="182" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_3" bpmnElement="StartEvent_1">
-        <dc:Bounds x="157" y="104" width="36" height="36" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="_BPMNShape_UserTask_2" bpmnElement="mainTask">
-        <dc:Bounds x="243" y="82" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="_BPMNShape_EndEvent_2" bpmnElement="EndEvent_1">
-        <dc:Bounds x="642" y="104" width="36" height="36" />
+      <bpmndi:BPMNEdge id="Flow_1re3tjv_di" bpmnElement="Flow_1re3tjv">
+        <di:waypoint x="960" y="182" />
+        <di:waypoint x="1042" y="182" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_3" bpmnElement="StartEvent">
+        <dc:Bounds x="157" y="164" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0iycg9w_di" bpmnElement="HelloScript">
-        <dc:Bounds x="400" y="82" width="100" height="80" />
+        <dc:Bounds x="250" y="142" width="100" height="80" />
         <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1h3tnt2_di" bpmnElement="EndEvent">
+        <dc:Bounds x="1042" y="164" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1coz2rr_di" bpmnElement="WorldScript">
+        <dc:Bounds x="860" y="142" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1j5yx8p_di" bpmnElement="EmbeddedProcess" isExpanded="true">
+        <dc:Bounds x="430" y="82" width="350" height="200" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1k7xgqt_di" bpmnElement="Flow_1k7xgqt">
+        <di:waypoint x="506" y="182" />
+        <di:waypoint x="560" y="182" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_18m6llh_di" bpmnElement="Flow_18m6llh">
+        <di:waypoint x="660" y="182" />
+        <di:waypoint x="722" y="182" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Event_1eakn4o_di" bpmnElement="StartEmbeddedEvent">
+        <dc:Bounds x="470" y="164" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_UserTask_2" bpmnElement="MainTask">
+        <dc:Bounds x="560" y="142" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1r2opc3_di" bpmnElement="EndEmbeddedEvent">
+        <dc:Bounds x="722" y="164" width="36" height="36" />
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

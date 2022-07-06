@@ -17,17 +17,17 @@ import static org.apache.commons.lang3.builder.ToStringStyle.MULTI_LINE_STYLE;
 public class MyListener {
 
     protected void log(String message, Object value) {
-        log.info("{}: {} - {}", message, value.getClass().getName(), reflectionToString(value, MULTI_LINE_STYLE));
+        log.debug("{}: {} - {}", message, value.getClass().getName(), reflectionToString(value, MULTI_LINE_STYLE));
     }
 
     @EventListener
     public void onDelegateTask(DelegateTask delegateTask) {
-//        log("onDelegateTask", delegateTask);
+        log("onDelegateTask", delegateTask);
     }
 
     @EventListener
     public void onTaskEvent(TaskEvent taskEvent) {
-//        log("onTaskEvent", taskEvent);
+        log("onTaskEvent", taskEvent);
     }
 
     @EventListener
@@ -37,12 +37,12 @@ public class MyListener {
 
     @EventListener
     public void onExecutionEvent(ExecutionEvent executionEvent) {
-//        log("onExecutionEvent", executionEvent);
+        log("onExecutionEvent", executionEvent);
     }
 
     @EventListener
     public void onHistoryEvent(HistoryEvent historyEvent) {
-//        log("onHistoryEvent", historyEvent);
+        log("onHistoryEvent", historyEvent);
     }
 
 }
