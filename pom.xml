@@ -56,6 +56,7 @@
         <module>long-strings</module>
         <module>deliverMessage</module>
         <module>externally-terminated</module>
+        <module>complex-variable-types</module>
     </modules>
 
     <dependencyManagement>
